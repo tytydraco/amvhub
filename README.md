@@ -1,4 +1,4 @@
-# amvtube
+# amvhub
 A program to bulk convert videos into AMV format for Chinese DAPs
 
 # How-To
