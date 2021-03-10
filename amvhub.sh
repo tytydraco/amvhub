@@ -3,14 +3,14 @@ shopt -s globstar
 cd "$(dirname "$0")"
 
 # ---
-export WIDTH="320"
-export HEIGHT="-1"
+export WIDTH="160"
+export HEIGHT="128"
 export FPS="30"
+export FORMAT="amv"
 # ---
 INPUT="input"
 LOCK=".lock"
 LOG="log.txt"
-FORMAT="amv"
 
 while [[ -f "$LOCK" ]]
 do
