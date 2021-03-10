@@ -10,6 +10,7 @@ export FPS="30"
 INPUT="input"
 LOCK=".lock"
 LOG="log.txt"
+FORMAT="amv"
 
 while [[ -f "$LOCK" ]]
 do
@@ -23,7 +24,7 @@ echo "$(date)" >> "$LOG"
 _amvhub_convert() {
     ffmpeg \
         -i "$1" \
-        -f amv \
+        -f "$FORMAT" \
         -vf "scale=$WIDTH:$HEIGHT" \
         -strict -1 \
         -r "$FPS" \
@@ -33,11 +34,11 @@ _amvhub_convert() {
         -n \
         -qmin 3 \
         -qmax 3 \
-        "${1%.*}.amv" && rm "$1"
+        "${1%.*}.$FORMAT" && rm "$1"
 }
 
 export -f _amvhub_convert
-find "$INPUT" -type f -not -name "*.amv" -not -name ".gitkeep" -exec bash -c '_amvhub_convert "{}" &' \;
+find "$INPUT" -type f -not -name "*.$FORMAT" -not -name ".gitkeep" -exec bash -c '_amvhub_convert "{}" &' \;
 
 wait
 
