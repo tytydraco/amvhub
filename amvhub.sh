@@ -38,6 +38,8 @@ convert() {
         -ar 22050 \
         -block_size 735 \
         -n \
+	-qmin 3 \
+	-qmax 3 \
         "$OUTPUT/$name.amv"
 }
 
