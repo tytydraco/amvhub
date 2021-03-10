@@ -3,12 +3,11 @@ shopt -s globstar
 cd "$(dirname "$0")"
 
 # ---
-WIDTH="320"
-HEIGHT="-1"
-FPS="30"
+export WIDTH="320"
+export HEIGHT="-1"
+export FPS="30"
 # ---
 INPUT="input"
-OUTPUT="output"
 LOCK=".lock"
 LOG="log.txt"
 
@@ -21,13 +20,7 @@ done
 touch "$LOCK"
 echo "$(date)" >> "$LOG"
 
-mkdir -p "$OUTPUT"
-
-convert() {
-    local basename
-    basename="$(basename "$1")"
-    name="$(echo "$basename" | cut -f 1 -d '.')"
-
+_amvhub_convert() {
     ffmpeg \
         -i "$1" \
         -f amv \
@@ -38,17 +31,15 @@ convert() {
         -ar 22050 \
         -block_size 735 \
         -n \
-	-qmin 3 \
-	-qmax 3 \
-        "$OUTPUT/$name.amv"
+        -qmin 3 \
+        -qmax 3 \
+        "${1%.*}.amv" && rm "$1"
 }
 
-for amv in "$INPUT"/**/*
-do
-    [[ "$amv" == "$INPUT/**/*" ]] && continue
-    [[ "$amv" == ".gitkeep" ]] && continue
-    convert "$amv"
-done
+export -f _amvhub_convert
+find "$INPUT" -type f -not -name "*.amv" -not -name ".gitkeep" -exec bash -c '_amvhub_convert "{}" &' \;
+
+wait
 
 rm -f "$LOCK"
 
