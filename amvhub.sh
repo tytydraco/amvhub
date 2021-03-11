@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 shopt -s globstar
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit 1
 
 # ---
 export WIDTH="320"
@@ -8,9 +8,13 @@ export HEIGHT="-1"
 export FPS="30"
 export FORMAT="amv"
 # ---
-INPUT="input"
+export INPUT="input"
+export OUTPUT="output"
+# ---
 LOCK=".lock"
 LOG="log.txt"
+
+mkdir -p "$OUTPUT"
 
 while [[ -f "$LOCK" ]]
 do
@@ -19,9 +23,19 @@ do
 done
 
 touch "$LOCK"
-echo "$(date)" >> "$LOG"
+date >> "$LOG"
 
 _amvhub_convert() {
+    local output_file
+    local output_dir
+
+    output_file="$(echo "$1" | sed "s|^$INPUT/|$OUTPUT/|")"
+    echo "$output_file"
+    output_file="${output_file%.*}.$FORMAT"
+
+    output_dir="${output_file%/*}"
+    mkdir -p "$output_dir"
+
     ffmpeg \
         -i "$1" \
         -f "$FORMAT" \
@@ -34,11 +48,11 @@ _amvhub_convert() {
         -n \
         -qmin 3 \
         -qmax 3 \
-        "${1%.*}.$FORMAT" && rm "$1"
+        "$output_file"
 }
 
 export -f _amvhub_convert
-find "$INPUT" -type f -not -name "*.$FORMAT" -not -name ".gitkeep" -exec bash -c '_amvhub_convert "{}" &' \;
+find "$INPUT" -type f -not -name "*.$FORMAT" -exec bash -c '_amvhub_convert "{}"' \;
 
 wait
 
