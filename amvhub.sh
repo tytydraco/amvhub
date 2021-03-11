@@ -52,7 +52,7 @@ _amvhub_convert() {
 }
 
 export -f _amvhub_convert
-find "$INPUT" -type f -not -name "*.$FORMAT" -exec bash -c '_amvhub_convert "{}"' \;
+find "$INPUT" -type f -not -name "*.$FORMAT" -print0 | xargs -0 -I {} bash -c '_amvhub_convert "{}"'
 
 wait
 
