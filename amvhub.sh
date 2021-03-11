@@ -33,6 +33,8 @@ _amvhub_convert() {
     echo "$output_file"
     output_file="${output_file%.*}.$FORMAT"
 
+    [[ -f "$output_file" ]] && return
+
     output_dir="${output_file%/*}"
     mkdir -p "$output_dir"
 
