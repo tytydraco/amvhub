@@ -46,7 +46,7 @@ _amvhub_convert() {
         -r "$FPS" \
         -ac 1 \
         -ar 22050 \
-        -block_size 735 \
+        -block_size 1470 \
         -n \
         -qmin 3 \
         -qmax 3 \
