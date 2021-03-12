@@ -5,7 +5,7 @@ cd "$(dirname "$0")" || exit 1
 # ---
 export WIDTH="160"
 export HEIGHT="120"
-export FPS="21"
+export FPS="15"
 export FORMAT="amv"
 # ---
 export INPUT="input"
