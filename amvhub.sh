@@ -3,12 +3,12 @@ shopt -s globstar
 cd "$(dirname "$0")" || exit 1
 
 # ---
-export WIDTH="160"
-export HEIGHT="120"
-export FPS="15"
+export WIDTH="320"
+export HEIGHT="-1"
+export FPS="30"
 export FORMAT="amv"
 # ---
-export INPUT="input"
+export INPUT="../TV Shows"
 export OUTPUT="output"
 # ---
 LOCK=".lock"
@@ -46,7 +46,7 @@ _amvhub_convert() {
         -r "$FPS" \
         -ac 1 \
         -ar 22050 \
-        -block_size 1470 \
+        -block_size 735 \
         -n \
         -qmin 3 \
         -qmax 3 \
