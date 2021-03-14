@@ -41,7 +41,7 @@ _amvhub_convert() {
     ffmpeg \
         -i "$1" \
         -f "$FORMAT" \
-        -vf "scale=$WIDTH:$HEIGHT" \
+        -vf "mpdecimate,scale=$WIDTH:$HEIGHT" \
         -strict -1 \
         -r "$FPS" \
         -ac 1 \
