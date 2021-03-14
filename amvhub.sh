@@ -5,7 +5,7 @@ cd "$(dirname "$0")" || exit 1
 # ---
 export WIDTH="160"
 export HEIGHT="120"
-export FPS="30"
+export FPS="15"
 export FORMAT="amv"
 # ---
 export INPUT="../TV Shows"
@@ -46,7 +46,7 @@ _amvhub_convert() {
         -r "$FPS" \
         -ac 1 \
         -ar 22050 \
-        -block_size 735 \
+        -block_size 1470 \
         -n \
         -qmin 3 \
         -qmax 3 \
