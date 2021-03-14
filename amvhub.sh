@@ -3,8 +3,8 @@ shopt -s globstar
 cd "$(dirname "$0")" || exit 1
 
 # ---
-export WIDTH="-1"
-export HEIGHT="240"
+export WIDTH="320"
+export HEIGHT="-1"
 export FPS="15"
 export FORMAT="amv"
 # ---
