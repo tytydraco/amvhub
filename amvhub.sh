@@ -13,6 +13,7 @@ export OUTPUT="output"
 # ---
 LOCK=".lock"
 LOG="log.txt"
+JOBS=4
 
 mkdir -p "$OUTPUT"
 
@@ -54,7 +55,7 @@ _amvhub_convert() {
 }
 
 export -f _amvhub_convert
-find "$INPUT" -type f -not -name "*.$FORMAT" -print0 | xargs -0 -I {} bash -c '_amvhub_convert "{}"'
+find "$INPUT" -type f -not -name "*.$FORMAT" -print0 | xargs -0 -P "$JOBS" -I {} bash -c '_amvhub_convert "{}"'
 
 wait
 
